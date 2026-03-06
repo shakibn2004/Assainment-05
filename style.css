@@ -8,6 +8,12 @@ body {
     padding: 16px 25px;
     border-radius: 8px;
 }
+.btn-secondary {
+    background: #4A00FF;
+    color: #fff;
+    padding: 8px 25px;
+    border-radius: 8px;
+}
 
 
 @import "tailwindcss"
