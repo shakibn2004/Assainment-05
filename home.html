@@ -13,10 +13,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <!-- font awesome link -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
-<body class="flex items-center h-screen">
+<body>
 
+    <header>
+        <nav class="w-144/160 m-auto flex justify-between items-center py-5 ">
+            <div class="nav-start flex items-center gap-2">
+                <img class="w-9"  src="./assets/github-logo.png" alt="Github Logo">
+                <h2 class="text-2xl font-semibold cursor-default">Github Issues Traker</h2>
+            </div>
+
+            <div class="nav-end flex gap-2 items-center">
+                <input class="outline-none shadow-[0_0_2px_black]/50 p-4 h-9 rounded" type="search" placeholder="Search Issues....">
+                <button class="btn font-semibold">+ New Issue</button>
+            </div>
+        </nav>
+    </header>
 
     <script src="./app.js"></script>
 </body>
