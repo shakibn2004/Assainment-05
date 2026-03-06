@@ -1,28 +1,21 @@
-// Login page functionality 
-document.getElementById('sign-in-btn').addEventListener('click', function() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
 
-    if(username === '') {
+// toggling tab functionality
+document.getElementById('all-tab').addEventListener('click', function() {
+    document.getElementById('all-tab').classList.add('btn-secondary');
+    document.getElementById('open-tab').classList.remove('btn-secondary');
+    document.getElementById('closed-tab').classList.remove('btn-secondary');
+})
 
-        alert('Username could not be emty');
-        return
-        
-    } else if(username !== 'admin') {
+document.getElementById('open-tab').addEventListener('click', function() {
+    document.getElementById('open-tab').classList.add('btn-secondary');
+    document.getElementById('all-tab').classList.remove('btn-secondary');
+    document.getElementById('closed-tab').classList.remove('btn-secondary');
+    
+})
 
-        alert('username not matched!')
-        return
-
-    } else if(password < 8) {
-
-        alert('password should be at least 8 charecter!')
-        return
-
-    } else if(password !== 'admin123') {
-
-        alert('password not matched')
-        return
-
-    }
-    window.location.assign('./home.html');
-});
+document.getElementById('closed-tab').addEventListener('click', function() {
+    document.getElementById('closed-tab').classList.add('btn-secondary');
+    document.getElementById('all-tab').classList.remove('btn-secondary');
+    document.getElementById('open-tab').classList.remove('btn-secondary');
+    
+})
