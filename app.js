@@ -87,11 +87,11 @@ const renderAllTab = () => {
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
+                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
+                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
+                <p class=" text-[12px] text-[#64748B]">${item.updatedAt}</p>
         `
         issueCards.append(div)
         
@@ -124,10 +124,10 @@ const renderOpenTab = () => {
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
                     <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
+                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
                 </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
+                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
+                <p class=" text-[12px] text-[#64748B]">${item.updatedAt}</p>
         `
         issueCards.append(div)
     })
@@ -161,8 +161,8 @@ const renderClosedTab = () => {
                     <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
                     <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
                 </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
+                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
+                <p class=" text-[12px] text-[#64748B]">${item.updatedAt}</p>
         `
         issueCards.append(div)
     })
