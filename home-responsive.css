@@ -1,0 +1,50 @@
+@media screen and (max-width: 572px) {
+    nav {
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+    }
+    
+    .nav-start {
+        margin-bottom: 20px;
+    }
+    
+    .nav-end {
+        gap: 40px;
+        justify-content: center;
+    }
+    
+    .nav-end input {
+        width: 50%;
+    }
+    
+    
+    
+    main {
+        width: 90%;
+        margin-top: 20px;
+    }
+    
+    main .toggle-tab {
+        width: 90%;
+    }
+    
+    main .toggle-tab button {
+        padding: 8px 28px;
+    }
+    
+    main #issues-status {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+    
+    main #issue-cards {
+        grid-template-columns: repeat(1, 1fr);
+        padding: 30px 0;
+    }
+    
+}
+
+
+
