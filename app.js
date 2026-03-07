@@ -1,216 +1,287 @@
 // all veriable and arrays
-const dialogContainer = document.getElementById('dialog-container');
-const issueCards = document.getElementById('issue-cards');
-let totalIssues = document.getElementById('total-issues');
+const dialogContainer = document.getElementById("dialog-container");
+const issueCards = document.getElementById("issue-cards");
+let totalIssues = document.getElementById("total-issues");
 const dialog = document.getElementById("myDialog");
 const closeBtn = document.getElementById("closeDialog");
-const allIssues = []
-const openIssues = []
-const closedIssues =[]
+const allIssues = [];
+const openIssues = [];
+const closedIssues = [];
 let activeTab = "all";
 
-
 // toggling tab functionality
-document.getElementById('all-tab').addEventListener('click', function() {
-    document.getElementById('search').value = ''
-    activeTab = "all"
-    document.getElementById('all-tab').classList.add('btn-secondary');
-    document.getElementById('open-tab').classList.remove('btn-secondary');
-    document.getElementById('closed-tab').classList.remove('btn-secondary');
-    renderAllTab()
-    totalIssues.innerHTML = issueCards.childNodes.length;
-})
+document.getElementById("all-tab").addEventListener("click", function () {
+  document.getElementById("search").value = "";
+  activeTab = "all";
+  document.getElementById("all-tab").classList.add("btn-secondary");
+  document.getElementById("open-tab").classList.remove("btn-secondary");
+  document.getElementById("closed-tab").classList.remove("btn-secondary");
+  renderAllTab();
+  totalIssues.innerHTML = issueCards.childNodes.length;
+});
 
-document.getElementById('open-tab').addEventListener('click', function() {
-    document.getElementById('search').value = ''
-    activeTab = "open"
-    document.getElementById('open-tab').classList.add('btn-secondary');
-    document.getElementById('all-tab').classList.remove('btn-secondary');
-    document.getElementById('closed-tab').classList.remove('btn-secondary');
-    renderOpenTab()
-    totalIssues.innerHTML = issueCards.childNodes.length;
-    
-})
+document.getElementById("open-tab").addEventListener("click", function () {
+  document.getElementById("search").value = "";
+  activeTab = "open";
+  document.getElementById("open-tab").classList.add("btn-secondary");
+  document.getElementById("all-tab").classList.remove("btn-secondary");
+  document.getElementById("closed-tab").classList.remove("btn-secondary");
+  renderOpenTab();
+  totalIssues.innerHTML = issueCards.childNodes.length;
+});
 
-document.getElementById('closed-tab').addEventListener('click', function() {
-    document.getElementById('search').value = ''
-    activeTab = "closed"
-    document.getElementById('closed-tab').classList.add('btn-secondary');
-    document.getElementById('all-tab').classList.remove('btn-secondary');
-    document.getElementById('open-tab').classList.remove('btn-secondary');
-    renderClosedTab()
-    totalIssues.innerHTML = issueCards.childNodes.length;
-})
-
+document.getElementById("closed-tab").addEventListener("click", function () {
+  document.getElementById("search").value = "";
+  activeTab = "closed";
+  document.getElementById("closed-tab").classList.add("btn-secondary");
+  document.getElementById("all-tab").classList.remove("btn-secondary");
+  document.getElementById("open-tab").classList.remove("btn-secondary");
+  renderClosedTab();
+  totalIssues.innerHTML = issueCards.childNodes.length;
+});
 
 // loading spener
 const loader = document.getElementById("loader");
 
-function showLoader(){
+function showLoader() {
   loader.classList.remove("hidden");
 }
 
-function hideLoader(){
+function hideLoader() {
   loader.classList.add("hidden");
 }
-hideLoader()
-
-
+hideLoader();
 
 // fetching all isses
 async function allIssuesLoad() {
-    showLoader()
-    const res = await fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues');
-    const data = await res.json();
+  showLoader();
+  const res = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+  );
+  const data = await res.json();
 
-    data.data.map(item => allIssues.push(item))
-    renderAllTab(data)
-    hideLoader()
+  data.data.map((item) => allIssues.push(item));
+  renderAllTab(data);
+  hideLoader();
 
-    data.data.forEach(item => {
-        if(item.status === 'open') {
-            openIssues.push(item)
-        } else {
-            closedIssues.push(item)
-        }
-    })
+  data.data.forEach((item) => {
+    if (item.status === "open") {
+      openIssues.push(item);
+    } else {
+      closedIssues.push(item);
+    }
+  });
 }
-allIssuesLoad()
-
+allIssuesLoad();
 
 // all tab rendering function
 const renderAllTab = () => {
-    issueCards.innerHTML = ''
+  issueCards.innerHTML = "";
 
-    allIssues.forEach(item => {
-        let div = document.createElement('div');
-        div.className = 'card p-4 rounded-xl shadow-[0_0_2px_black]/40'
-        div.id = `${item.id}`
+  allIssues.forEach((item) => {
+    let div = document.createElement("div");
+    div.className = "card p-4 rounded-xl shadow-[0_0_2px_black]/40";
+    div.id = `${item.id}`;
 
-        if(item.status == 'open') {
-            div.classList.add('open-border')
-        } else if(item.status == 'closed') {
-            div.classList.add('closed-border')
-        }
+    if (item.status == "open") {
+      div.classList.add("open-border");
+    } else if (item.status == "closed") {
+      div.classList.add("closed-border");
+    }
 
-        div.innerHTML = `
+    div.innerHTML = `
             <div class="card-top flex justify-between">
                     <img src="${
-                        item.status === 'open'
-                            ? './assets/Open-Status.png'
-                            : './assets/Closed- Status .png'
+                      item.status === "open"
+                        ? "./assets/Open-Status.png"
+                        : "./assets/Closed- Status .png"
                     }" alt="">
                     <h3 id="priority" class="
                     ${
-                      item.priority === 'high'
-                         ? 'text-red-500'
-                        : item.priority === 'medium'
-                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                      item.priority === "high"
+                        ? "text-red-500"
+                        : item.priority === "medium"
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                     }
                     ">${item.priority.toUpperCase()}</h3>
                 </div>
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
-                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
+                    <button id="btn-1" class="border text-nowrap text-[12px] px-3 py-1 rounded-full 
+                    ${
+                      item.labels[0] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[0] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[0] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[0] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ? "hidden" : "block"} border text-nowrap text-[12px] px-3 py-1 rounded-full
+                    ${
+                      item.labels[1] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[1] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[1] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[1] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
                 <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
                 <p class=" text-[12px] text-[#64748B]">${item.createdAt}</p>
-        `
-        issueCards.append(div)
-        
-    });
-}
-
+        `;
+    issueCards.append(div);
+  });
+};
 
 // open tab rendering function
 const renderOpenTab = () => {
-    issueCards.innerHTML = ''
+  issueCards.innerHTML = "";
 
-    openIssues.forEach(item => {
-        let div = document.createElement('div');
-        div.className = 'card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40'
+  openIssues.forEach((item) => {
+    let div = document.createElement("div");
+    div.className = "card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40";
 
-        div.innerHTML = `
+    div.innerHTML = `
             <div class="card-top flex justify-between">
-                    <img src="$./assets/Open-Status.png" alt="">
+                    <img src="${
+                      item.status === "open"
+                        ? "./assets/Open-Status.png"
+                        : "./assets/Closed- Status .png"
+                    }" alt="">
                     <h3 id="priority" class="
                     ${
-                      item.priority === 'high'
-                         ? 'text-red-500'
-                        : item.priority === 'medium'
-                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                      item.priority === "high"
+                        ? "text-red-500"
+                        : item.priority === "medium"
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                     }
                     ">${item.priority.toUpperCase()}</h3>
                 </div>
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
+                    <button id="btn-1" class="border text-nowrap text-[12px] px-3 py-1 rounded-full 
+                    ${
+                      item.labels[0] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[0] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[0] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[0] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ? "hidden" : "block"} border text-nowrap text-[12px] px-3 py-1 rounded-full
+                    ${
+                      item.labels[1] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[1] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[1] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[1] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
                 <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
                 <p class=" text-[12px] text-[#64748B]">${item.createdAt}</p>
-        `
-        issueCards.append(div)
-    })
-}
+        `;
+    issueCards.append(div);
+  });
+};
 
-
-// closed tab rendering function 
+// closed tab rendering function
 const renderClosedTab = () => {
-    issueCards.innerHTML = ''
+  issueCards.innerHTML = "";
 
-    closedIssues.forEach(item => {
-        let div = document.createElement('div');
-        div.className = 'card p-4 closed-border rounded-xl shadow-[0_0_2px_black]/40'
+  closedIssues.forEach((item) => {
+    let div = document.createElement("div");
+    div.className =
+      "card p-4 closed-border rounded-xl shadow-[0_0_2px_black]/40";
 
-        div.innerHTML = `
+    div.innerHTML = `
             <div class="card-top flex justify-between">
-                    <img src="./assets/Closed- Status .png" alt="">
+                    <img src="${
+                      item.status === "open"
+                        ? "./assets/Open-Status.png"
+                        : "./assets/Closed- Status .png"
+                    }" alt="">
                     <h3 id="priority" class="
                     ${
-                      item.priority === 'high'
-                         ? 'text-red-500'
-                        : item.priority === 'medium'
-                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                      item.priority === "high"
+                        ? "text-red-500"
+                        : item.priority === "medium"
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                     }
                     ">${item.priority.toUpperCase()}</h3>
                 </div>
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
+                    <button id="btn-1" class="border text-nowrap text-[12px] px-3 py-1 rounded-full 
+                    ${
+                      item.labels[0] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[0] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[0] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[0] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ? "hidden" : "block"} border text-nowrap text-[12px] px-3 py-1 rounded-full
+                    ${
+                      item.labels[1] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[1] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[1] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[1] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
                 <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
                 <p class=" text-[12px] text-[#64748B]">${item.createdAt}</p>
-        `
-        issueCards.append(div)
-    })
-}
-
-
+        `;
+    issueCards.append(div);
+  });
+};
 
 // fetch indivisual card data
 async function indivisualCardData(cardId) {
-    showLoader()
-  const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${cardId}`);
+  showLoader();
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${cardId}`,
+  );
   const data = await res.json();
-  hideLoader()
+  hideLoader();
 
   renderModal(data.data);
 }
 
-
-
 // render indivisual data on modal
 const renderModal = (data) => {
-
   dialogContainer.innerHTML = "";
 
   const dialog = document.createElement("dialog");
@@ -220,15 +291,54 @@ const renderModal = (data) => {
   
   <h2 class="text-2xl font-bold mb-1">${data.title}</h2>
   <div class="flex items-center gap-1">
-    <button class="bg-[#00A96E] px-2 py-1 rounded-full text-white text-[12px]">${data.status}</button>
+    <button class="px-2 py-1 rounded-full text-white text-[12px] ${data.status === "open" ? "bg-[#00A96E]" : "bg-[#EF4444]"}">${data.status}</button>
     <i class="fa-solid fa-circle text-[#64748B] text-[6px]"></i>
     <span class=" text-[#64748B] text-[12px]">${data.status} by ${data.author}</span>
     <i class="fa-solid fa-circle text-[#64748B] text-[6px]"></i>
     <span class=" text-[#64748B] text-[12px]">${data.updatedAt}</span>
   </div>
   <div class="bug my-8">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> ${data.labels[0]}</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> ${data.labels[1]}</button>
+                    <button class="border text-[12px] px-3 py-1 rounded-full
+                                                            ${
+                                                              data.labels[0] ===
+                                                              "bug"
+                                                                ? "border-[#EF4444] text-[#EF4444]"
+                                                                : data
+                                                                      .labels[0] ===
+                                                                    "enhancement"
+                                                                  ? "border-[#00A96E] text-[#00A96E]"
+                                                                  : data
+                                                                        .labels[0] ===
+                                                                      "documentation"
+                                                                    ? "border-[#0969DA] text-[#2563EB]"
+                                                                    : data
+                                                                          .labels[0] ===
+                                                                        "help wanted"
+                                                                      ? "border-[#D97706] text-[#D97706]"
+                                                                      : "border-[#8250DF] text-[#8250DF]"
+                                                            }
+                    "><i class="fa-solid fa-bug"></i> ${data.labels[0]}</button>
+                    <button class="${data.labels.length < 2 ? "hidden" : "inline"} border text-[12px] px-3 py-1 rounded-full
+                                                                                ${
+                                                                                  data
+                                                                                    .labels[1] ===
+                                                                                  "bug"
+                                                                                    ? "border-[#EF4444] text-[#EF4444]"
+                                                                                    : data
+                                                                                          .labels[1] ===
+                                                                                        "enhancement"
+                                                                                      ? "border-[#00A96E] text-[#00A96E]"
+                                                                                      : data
+                                                                                            .labels[1] ===
+                                                                                          "documentation"
+                                                                                        ? "border-[#0969DA] text-[#2563EB]"
+                                                                                        : data
+                                                                                              .labels[1] ===
+                                                                                            "help wanted"
+                                                                                          ? "border-[#D97706] text-[#D97706]"
+                                                                                          : "border-[#8250DF] text-[#8250DF]"
+                                                                                }
+                    "><i class="fa-solid fa-life-ring"></i> ${data.labels[1]}</button>
   </div>
   <p class="text-[16px] text-[#64748B]">${data.description}</p>
   <div class="autor flex gap-2 my-10">
@@ -239,7 +349,7 @@ const renderModal = (data) => {
 
     <div class="end space-y-2">
         <p>Priority:</p>
-        <button class="bg-[#EF4444] px-3 py-1 rounded-full text-[12px] text-white">${data.priority}</button>
+        <button class="px-3 py-1 rounded-full text-[12px] text-white ${data.priority === "high" ? "bg-[#EF4444]" : data.priority === "medium" ? "bg-[#D97706]" : "bg-[#9CA3AF]"}">${data.priority}</button>
     </div>
   </div>
   <div class="flex justify-end gap-2">
@@ -253,11 +363,8 @@ const renderModal = (data) => {
   dialog.showModal();
 };
 
-
-
 // card click (event delegation)
 issueCards.addEventListener("click", function (event) {
-
   const card = event.target.closest(".card");
 
   if (!card) return;
@@ -267,172 +374,229 @@ issueCards.addEventListener("click", function (event) {
   indivisualCardData(cardId);
 });
 
-
-
 // modal close (event delegation)
 dialogContainer.addEventListener("click", function (event) {
-
   if (event.target.closest("#closeDialog")) {
-
     const dialog = document.querySelector("dialog");
 
     dialog.close();
-
   }
-
 });
 
-
 // add search functionality
-document.getElementById('search').addEventListener('input', function() {
-    let searchValue = document.getElementById('search').value;
-    if(!searchValue) {
-        searchDataLoad("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-        return
-    } 
+document.getElementById("search").addEventListener("input", function () {
+  let searchValue = document.getElementById("search").value;
+  if (!searchValue) {
+    searchDataLoad("https://phi-lab-server.vercel.app/api/v1/lab/issues");
+    return;
+  }
 
-        searchDataLoad(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
-})
+  searchDataLoad(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`,
+  );
+});
 
 async function searchDataLoad(searchValue) {
-    showLoader()
-    const res = await fetch(searchValue)
-    const data = await res.json()
-    hideLoader()
-    renderSearch(data)
+  showLoader();
+  const res = await fetch(searchValue);
+  const data = await res.json();
+  hideLoader();
+  renderSearch(data);
 }
-
 
 const renderSearch = (data) => {
-    issueCards.innerHTML = ''
+  issueCards.innerHTML = "";
 
-    data.data.forEach(item => {
-        
-        if(activeTab === "all") {
-            let div = document.createElement('div');
-        div.className = 'card p-4 rounded-xl shadow-[0_0_2px_black]/40'
-        div.id = `${item.id}`
+  data.data.forEach((item) => {
+    if (activeTab === "all") {
+      let div = document.createElement("div");
+      div.className = "card p-4 rounded-xl shadow-[0_0_2px_black]/40";
+      div.id = `${item.id}`;
 
-        if(item.status == 'open') {
-            div.classList.add('open-border')
-        } else if(item.status == 'closed') {
-            div.classList.add('closed-border')
-        }
+      if (item.status == "open") {
+        div.classList.add("open-border");
+      } else if (item.status == "closed") {
+        div.classList.add("closed-border");
+      }
 
-        div.innerHTML = `
+      div.innerHTML = `
             <div class="card-top flex justify-between">
                     <img src="${
-                        item.status === 'open'
-                            ? './assets/Open-Status.png'
-                            : './assets/Closed- Status .png'
+                      item.status === "open"
+                        ? "./assets/Open-Status.png"
+                        : "./assets/Closed- Status .png"
                     }" alt="">
                     <h3 id="priority" class="
                     ${
-                      item.priority === 'high'
-                         ? 'text-red-500'
-                        : item.priority === 'medium'
-                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                      item.priority === "high"
+                        ? "text-red-500"
+                        : item.priority === "medium"
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                     }
                     ">${item.priority.toUpperCase()}</h3>
                 </div>
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
-                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
+                    <button id="btn-1" class="border text-nowrap text-[12px] px-3 py-1 rounded-full 
+                    ${
+                      item.labels[0] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[0] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[0] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[0] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ? "hidden" : "block"} border text-nowrap text-[12px] px-3 py-1 rounded-full
+                    ${
+                      item.labels[1] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[1] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[1] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[1] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
                 <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
                 <p class=" text-[12px] text-[#64748B]">${item.createdAt}</p>
-        `
-        issueCards.append(div)
-        totalIssues.innerHTML = issueCards.childNodes.length;
-        }
-        else if(activeTab === "open" && item.status === "open") {
-            let div = document.createElement('div');
-        div.className = 'card p-4 rounded-xl shadow-[0_0_2px_black]/40'
-        div.id = `${item.id}`
+        `;
+      issueCards.append(div);
+      totalIssues.innerHTML = issueCards.childNodes.length;
+    } else if (activeTab === "open" && item.status === "open") {
+      let div = document.createElement("div");
+      div.className = "card p-4 rounded-xl shadow-[0_0_2px_black]/40";
+      div.id = `${item.id}`;
 
-        if(item.status == 'open') {
-            div.classList.add('open-border')
-        } else if(item.status == 'closed') {
-            div.classList.add('closed-border')
-        }
+      if (item.status == "open") {
+        div.classList.add("open-border");
+      } else if (item.status == "closed") {
+        div.classList.add("closed-border");
+      }
 
-        div.innerHTML = `
+      div.innerHTML = `
             <div class="card-top flex justify-between">
                     <img src="${
-                        item.status === 'open'
-                            ? './assets/Open-Status.png'
-                            : './assets/Closed- Status .png'
+                      item.status === "open"
+                        ? "./assets/Open-Status.png"
+                        : "./assets/Closed- Status .png"
                     }" alt="">
                     <h3 id="priority" class="
                     ${
-                      item.priority === 'high'
-                         ? 'text-red-500'
-                        : item.priority === 'medium'
-                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                      item.priority === "high"
+                        ? "text-red-500"
+                        : item.priority === "medium"
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                     }
                     ">${item.priority.toUpperCase()}</h3>
                 </div>
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
-                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
+                    <button id="btn-1" class="border text-nowrap text-[12px] px-3 py-1 rounded-full 
+                    ${
+                      item.labels[0] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[0] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[0] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[0] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ? "hidden" : "block"} border text-nowrap text-[12px] px-3 py-1 rounded-full
+                    ${
+                      item.labels[1] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[1] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[1] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[1] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
                 <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
                 <p class=" text-[12px] text-[#64748B]">${item.createdAt}</p>
-        `
-        issueCards.append(div)
-        totalIssues.innerHTML = issueCards.childNodes.length;
-        }
-        else if(activeTab === "closed" && item.status === "closed") {
-            let div = document.createElement('div');
-        div.className = 'card p-4 rounded-xl shadow-[0_0_2px_black]/40'
-        div.id = `${item.id}`
+        `;
+      issueCards.append(div);
+      totalIssues.innerHTML = issueCards.childNodes.length;
+    } else if (activeTab === "closed" && item.status === "closed") {
+      let div = document.createElement("div");
+      div.className = "card p-4 rounded-xl shadow-[0_0_2px_black]/40";
+      div.id = `${item.id}`;
 
-        if(item.status == 'open') {
-            div.classList.add('open-border')
-        } else if(item.status == 'closed') {
-            div.classList.add('closed-border')
-        }
+      if (item.status == "open") {
+        div.classList.add("open-border");
+      } else if (item.status == "closed") {
+        div.classList.add("closed-border");
+      }
 
-        div.innerHTML = `
+      div.innerHTML = `
             <div class="card-top flex justify-between">
                     <img src="${
-                        item.status === 'open'
-                            ? './assets/Open-Status.png'
-                            : './assets/Closed- Status .png'
+                      item.status === "open"
+                        ? "./assets/Open-Status.png"
+                        : "./assets/Closed- Status .png"
                     }" alt="">
                     <h3 id="priority" class="
                     ${
-                      item.priority === 'high'
-                         ? 'text-red-500'
-                        : item.priority === 'medium'
-                         ? 'text-yellow-500'
-                        : 'text-gray-400'
+                      item.priority === "high"
+                        ? "text-red-500"
+                        : item.priority === "medium"
+                          ? "text-yellow-500"
+                          : "text-gray-400"
                     }
                     ">${item.priority.toUpperCase()}</h3>
                 </div>
                 <h2 class="text-[14px] font-semibold mt-3 mb-2 line-clamp-2">${item.title}</h2>
                 <p class="text-[#64748B] text-[12px] mb-3 line-clamp-2">${item.description}</p>
                 <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
-                    <button class="${item.labels.length < 2 ?'hidden':'block'} bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
+                    <button id="btn-1" class="border text-nowrap text-[12px] px-3 py-1 rounded-full 
+                    ${
+                      item.labels[0] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[0] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[0] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[0] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-bug"></i> ${item.labels[0]}</button>
+                    <button class="${item.labels.length < 2 ? "hidden" : "block"} border text-nowrap text-[12px] px-3 py-1 rounded-full
+                    ${
+                      item.labels[1] === "bug"
+                        ? "border-[#EF4444] text-[#EF4444]"
+                        : item.labels[1] === "enhancement"
+                          ? "border-[#00A96E] text-[#00A96E]"
+                          : item.labels[1] === "documentation"
+                            ? "border-[#0969DA] text-[#2563EB]"
+                            : item.labels[1] === "help wanted"
+                              ? "border-[#D97706] text-[#D97706]"
+                              : "border-[#8250DF] text-[#8250DF]"
+                    }
+                    "><i class="fa-solid fa-life-ring"></i> ${item.labels[1]}</button>
                 </div>
                 <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by ${item.author}</P>
                 <p class=" text-[12px] text-[#64748B]">${item.createdAt}</p>
-        `
-        issueCards.append(div)
-        totalIssues.innerHTML = issueCards.childNodes.length;
-        }
-        
-    });
-}
-
-
-
-
-
+        `;
+      issueCards.append(div);
+      totalIssues.innerHTML = issueCards.childNodes.length;
+    }
+  });
+};
