@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- daisy ui -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -29,21 +31,21 @@
             </div>
 
             <div class="nav-end flex gap-2 items-center">
-                <input class="outline-none shadow-[0_0_2px_black]/50 p-4 h-9 rounded" type="search"
+                <input id="search" class="outline-none shadow-[0_0_2px_black]/50 p-4 h-9 rounded" type="search"
                     placeholder="Search Issues....">
                 <button class="btn font-semibold">+ New Issue</button>
             </div>
         </nav>
     </header>
 
-    <main class="w-111/160 m-auto mt-12">
+    <main id="main" class="w-111/160 m-auto mt-12">
         <section class="toggle-tab flex gap-6">
             <button id="all-tab" class="btn-secondary px-9 py-3 shadow-[0_0_2px_black]/40 rounded">All</button>
             <button id="open-tab" class=" px-9 py-3 shadow-[0_0_2px_black]/40 rounded">Open</button>
             <button id="closed-tab" class=" px-9 py-3 shadow-[0_0_2px_black]/40 rounded">Closed</button>
         </section>
 
-        <section class="status flex justify-between items-center p-6 mt-4 shadow-[0_0_2px_black]/30">
+        <section class="flex justify-between items-center p-6 mt-4 shadow-[0_0_2px_black]/30">
             <div class="status-start flex gap-2 items-center">
                 <img class="w-13 h-13" src="./assets/Aperture.png" alt="Aperture">
                 <div class="status-content space-y-1">
@@ -58,120 +60,17 @@
             </div>
         </section>
 
+        <div id="loader" class="flex justify-center my-10">
+            <span class="loading loading-dots loading-xl"></span>
+        </div>
+
         <section id="issue-cards" class="iusse-cards grid grid-cols-4 p-6 gap-3">
-            <div id="open-border" class="card p-4 rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
-            <div class="card p-4 open-border rounded-xl shadow-[0_0_2px_black]/40">
-                <div class="card-top flex justify-between">
-                    <img src="./assets/Open-Status.png" alt="">
-                    <h3 class="text-red-600">HIGH</h3>
-                </div>
-                <h2 class="text-[14px] font-semibold mt-3 mb-2">Fix navigation menu on mobile devices</h2>
-                <p class="text-[#64748B] text-[12px] mb-3">The navigation menu doesn't collapse properly on mobile devices...</p>
-                <div class="bug flex gap-1">
-                    <button class="border border-[#EF4444] text-[#EF4444] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-bug"></i> BUG</button>
-                    <button class="bg-[#FFF8DB] text-[#D97706] text-[12px] px-3 py-1 rounded-full"><i class="fa-solid fa-life-ring"></i> HELP WANTED</button>
-                </div>
-                <P class="mt-7 mb-2 text-[12px] text-[#64748B]">#1 by john_doe</P>
-                <p class=" text-[12px] text-[#64748B]">1/15/2024</p>
-            </div>
         </section>
+
+        <!-- Dialog -->
+        <div id="dialog-container">
+
+        </div>
     </main>
 
     <script src="./app.js"></script>
