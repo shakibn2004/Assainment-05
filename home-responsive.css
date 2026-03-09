@@ -2,7 +2,7 @@
     nav {
         flex-direction: column;
         align-items: center;
-        width: 90%;
+        width: 87.5%;
     }
     
     .nav-start {
@@ -21,12 +21,12 @@
     
     
     main {
-        width: 90%;
+        width: 87.5%;
         margin-top: 20px;
     }
     
     main .toggle-tab {
-        width: 90%;
+        top: 135px;
     }
     
     main .toggle-tab button {
@@ -48,13 +48,15 @@
 
 @media screen and (min-width: 640px) and (max-width: 1200px) {
     nav {
-        flex-direction: column;
-        align-items: center;
-        width: 90%;
+        width: 87.5%;
     }
 
     .nav-start {
         margin-bottom: 20px;
+    }
+
+    main .toggle-tab {
+        top: 120px;
     }
 
     main #issue-cards {
