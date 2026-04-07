@@ -1,3 +1,6 @@
+
+<img width="1470" height="835" alt="Screenshot 2026-04-07 at 11 17 38 PM" src="https://github.com/user-attachments/assets/8b8cee1e-83ec-41ca-9478-17d5ff865252" />
+
 --------------------------------------------------------------------
 ------- 1. What is the difference between var, let, and const? -----
 --------------------------------------------------------------------
